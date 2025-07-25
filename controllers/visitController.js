@@ -1,5 +1,6 @@
 const Visit = require("../models/visit");
 const axios = require('axios');
+const sendVisitNotification = require("../utils/sendEmail");
 
 
 const registerVisit = async (req, res) => {
@@ -49,6 +50,7 @@ const createVisit = async (req, res) => {
     });
 
     await newVisit.save();
+     await sendVisitNotification(newVisit);
     res.status(201).json({ message: 'Visit registered' });
 
   } catch (error) {
